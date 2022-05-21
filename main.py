@@ -11,6 +11,9 @@ from pygame.locals import KEYDOWN, K_RIGHT, K_LEFT, K_UP, K_DOWN, K_ESCAPE
 from pygame.locals import QUIT
 
 from game import Game
+#module importing for the bgm
+from pygame.locals import *
+from pygame import mixer
 
 black = pygame.Color(0, 0, 0)
 white = pygame.Color(255, 255, 255)
@@ -33,6 +36,11 @@ screen = pygame.display.set_mode((game.settings.width * 15, game.settings.height
 pygame.display.set_caption('Gluttonous')
 
 crash_sound = pygame.mixer.Sound('./sound/crash.wav')
+
+#The following slope is for the bgm and also can use the method of "pygame.mixer.Sound.play(crash_sound)"
+mixer.init()
+mixer.music.load('./sound/Final Bonus.wav')
+mixer.music.play()
 
 
 def text_objects(text, font, color=black):
