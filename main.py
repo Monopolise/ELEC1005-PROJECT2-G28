@@ -11,9 +11,13 @@ from pygame.locals import KEYDOWN, K_RIGHT, K_LEFT, K_UP, K_DOWN, K_ESCAPE
 from pygame.locals import QUIT
 
 from game import Game
-#module importing for the bgm
-from pygame.locals import *
+#module importing for the bgm
+
+from pygame.locals import *
+
 from pygame import mixer
+#module for volume control slider
+import PySimpleGUI as sg
 
 black = pygame.Color(0, 0, 0)
 white = pygame.Color(255, 255, 255)
@@ -36,12 +40,28 @@ screen = pygame.display.set_mode((game.settings.width * 15, game.settings.height
 pygame.display.set_caption('Gluttonous')
 
 crash_sound = pygame.mixer.Sound('./sound/crash.wav')
-
-#The following slope is for the bgm and also can use the method of "pygame.mixer.Sound.play(crash_sound)"
-mixer.init()
-mixer.music.load('./sound/Final Bonus.wav')
+#The following slope is for the bgm and also can use the method of "pygame.mixer.Sound.play(crash_sound)"
+mixer.init()
+bgm = pygame.mixer.Sound('./sound/Final Bonus.wav')
+mixer.music.load('./sound/Final Bonus.wav')
 mixer.music.play()
 
+def volume_control()
+    layout1 = [
+        [sg.Slider(key = 'volume1', range=(0, 100), 
+        orientation='h', size=(10, 15), default_value= 100, 
+        enable_events = True)] # <--- enable slider moved event
+
+    ]
+    layout2 = [
+        [sg.Slider(key = 'volume2', range=(0, 100), 
+        orientation='h', size=(10, 15), default_value= 100, 
+        enable_events = True)] # <--- enable slider moved event
+    ]
+    window1 = sg.Window('Crash Sound', layout1)
+    window2 = sg.Window('Background Music', layout2)
+    pygame.mixer.music.set_volume(crash_sound, float(values['volume1'] / 100))# The set_volume range is from 0.00 to 1.00 (every 0.01)
+    pygame.mixer.music.set_volume(bgm, float(values['volume1'] / 100))
 
 def text_objects(text, font, color=black):
     text_surface = font.render(text, True, color)
